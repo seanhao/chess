@@ -13,7 +13,7 @@
       ( {{ findChess(rowIndex+'-'+colIndex) }} ) -->
       
       <div v-if="findChess(rowIndex+'-'+colIndex)">
-        <Chess class="chess" v-if="findChess(rowIndex+'-'+colIndex)" :chessProp="findChess(rowIndex+'-'+colIndex)"  />
+        <Chess class="chess" v-if="findChess(rowIndex+'-'+colIndex)" :chessProp="findChess(rowIndex+'-'+colIndex)" @chessAttr='getAttr' />
       </div>
       <Step class="step" :stepProp="step" v-if="findStep(rowIndex+'-'+colIndex)"/>
     </td>
@@ -25,7 +25,7 @@
 <script>
 import Chess from './Chess.vue'
 import Step from './Step.vue'
-import { ref, reactive } from 'vue'
+import { ref, reactive, provide } from 'vue'
 
 export default {
   name: 'Board',
@@ -38,6 +38,13 @@ export default {
                             {name: 'King', type: 2, xy: '1-1'},])
     
     let step = reactive([])
+
+    provide("pos", "1-1")
+
+    const getAttr = (val) => {
+      console.log('-/-/-/- get Attr')
+      console.log('-/-/-/- Attr: ', val)
+    }
 
     const findChess = (xy) => {
       // xy == Array == [x, y]
@@ -184,6 +191,7 @@ export default {
       // select,
       selectId,
       selectToMove,
+      getAttr,
     }
   }
 }
