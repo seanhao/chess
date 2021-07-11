@@ -15,7 +15,7 @@
       <div v-if="findChess(rowIndex+'-'+colIndex)">
         <Chess class="chess" v-if="findChess(rowIndex+'-'+colIndex)" :chessProp="findChess(rowIndex+'-'+colIndex)"  />
       </div>
-      <Step :stepProp="step" v-if="findStep(rowIndex+'-'+colIndex)"/>
+      <Step class="step" :stepProp="step" v-if="findStep(rowIndex+'-'+colIndex)"/>
     </td>
   </tr>
  
@@ -146,8 +146,15 @@ export default {
             let moveToId = event.currentTarget.id
             console.log("***** change selectId.value to:", selectId.value)
             console.log('***** chessIndex: ', chessIndex)
-            chess[chessIndex].xy = moveToId
-            selectId.value = ""
+            console.log('***** step: ', step)
+            if (findStep(moveToId)) {
+              chess[chessIndex].xy = moveToId
+              selectId.value = ""
+              step = []
+            } else {
+              alert('can\'t move here')
+            }
+            
 
           }
           
@@ -182,10 +189,23 @@ export default {
 }
 </script>
 <style>
-  table{width: 100%;}
-  td{
-    width: 5%;
+  table {width: 100%;}
+
+  td {
+    position: relative;
+    width: 50px;
+    height: 50px;
     border: 1px solid #ccc;
-    padding-top: 5%;
+    /* padding-top: 5%; */
+  }
+  
+  .step {
+    background: #f00;
+    width: 100%;
+    height: 100%;
+    opacity: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 </style>
