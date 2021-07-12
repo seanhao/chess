@@ -10,7 +10,7 @@ import { inject, computed, reactive } from 'vue'
 
 export default {
     name: 'King',
-    emits: ["chessAttr"],
+    emits: ["chessRange"],
     props: {
     'chessProp': {
       type: Object,

@@ -7,13 +7,13 @@
   </div>
   <table>
   <!-- <button @click="reset()" >reset</button> -->
-  <tr v-for="(row, rowIndex) in 3" :key="rowIndex">
-    <td v-for="(col, colIndex) in 3" :key="colIndex" :id="rowIndex+'-'+colIndex" @click="selectToMove">
+  <tr v-for="(row, rowIndex) in 9" :key="rowIndex">
+    <td v-for="(col, colIndex) in 9" :key="colIndex" :id="rowIndex+'-'+colIndex" @click="selectToMove">
       <!-- {{ rowIndex }},{{ colIndex }} -
       ( {{ findChess(rowIndex+'-'+colIndex) }} ) -->
       
       <div v-if="findChess(rowIndex+'-'+colIndex)">
-        <Chess class="chess" v-if="findChess(rowIndex+'-'+colIndex)" :chessProp="findChess(rowIndex+'-'+colIndex)" @chessRange='getRange' />
+        <Chess class="chess" v-if="findChess(rowIndex+'-'+colIndex)" :chessProp="findChess(rowIndex+'-'+colIndex)" @chessRange="getRange" />
       </div>
       <Step class="step" :stepProp="step" v-if="findStep(rowIndex+'-'+colIndex)"/>
     </td>
