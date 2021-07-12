@@ -13,7 +13,7 @@
       ( {{ findChess(rowIndex+'-'+colIndex) }} ) -->
       
       <div v-if="findChess(rowIndex+'-'+colIndex)">
-        <Chess class="chess" v-if="findChess(rowIndex+'-'+colIndex)" :chessProp="findChess(rowIndex+'-'+colIndex)" @chessAttr='getAttr' />
+        <Chess class="chess" v-if="findChess(rowIndex+'-'+colIndex)" :chessProp="findChess(rowIndex+'-'+colIndex)" @chessRange='getRange' />
       </div>
       <Step class="step" :stepProp="step" v-if="findStep(rowIndex+'-'+colIndex)"/>
     </td>
@@ -42,9 +42,9 @@ export default {
     
     
 
-    const getAttr = (val) => {
-      console.log('-/-/-/- get Attr')
-      console.log('-/-/-/- Attr: ', val)
+    const getRange = (val) => {
+      console.log('-/-/-/- getRange: ', val)
+      step = val
     }
 
     const findChess = (xy) => {
@@ -84,7 +84,7 @@ export default {
     // const child_emit = ref("")
 
     let selectId = ref("")
-    provide('pos', selectId)
+    // provide('pos', selectId)
     
     // select
     // const select = (event) => {
@@ -120,14 +120,14 @@ export default {
 
           console.log("***** select selectId.value: ", selectId.value)
           
-          let pos = selectId.value
-          let x = parseInt(pos.split('-')[0])
-          let y = parseInt(pos.split('-')[1])
-          let possible1 = (x+1) + '-' + y
-          let possible2 = (x-1) + '-' + y
-          let possible3 = x + '-' + (y+1)
-          let possible4 = x + '-' + (y-1)
-          step = [possible1, possible2, possible3, possible4]
+          // let pos = selectId.value
+          // let x = parseInt(pos.split('-')[0])
+          // let y = parseInt(pos.split('-')[1])
+          // let possible1 = (x+1) + '-' + y
+          // let possible2 = (x-1) + '-' + y
+          // let possible3 = x + '-' + (y+1)
+          // let possible4 = x + '-' + (y-1)
+          // step = [possible1, possible2, possible3, possible4]
         
         } else if (selectId.value === event.currentTarget.id) {
 
@@ -194,7 +194,7 @@ export default {
       // select,
       selectId,
       selectToMove,
-      getAttr,
+      getRange,
     }
   }
 }

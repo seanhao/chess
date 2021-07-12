@@ -1,7 +1,7 @@
 <template> 
-  <div>
-      <p @click="passAttr">Pawn</p>
-      {{ pos }}
+  <div @click="passRange">
+      <p>Pawn</p>
+      <!-- {{ pos }} -->
   </div>
 </template>
 
@@ -11,9 +11,15 @@ import { inject, computed, reactive } from 'vue'
 export default {
     name: 'Pawn',
     emits: ["chessAttr"],
+    props: {
+    'chessProp': {
+      type: Object,
+    },
+  },
     setup(props, { emit }) {
 
-      const pos = inject('pos')
+      console.log('Pawn prop', props.chessProp)
+      // const pos = inject('pos')
       
       const range = (xy) => {
         console.log('xy: ', xy)
@@ -28,15 +34,14 @@ export default {
         return step
       }
 
-      const passAttr = () => {
-        console.log('-/-/-/-passAttr')
-        console.log('inject : ',pos)
-        console.log('inject : ',pos.value)
-        emit('chessAttr', range(pos.value))
+      const passRange = () => {
+        console.log('-/-/-/-passRange')
+        // console.log('inject : ',pos.value)
+        emit('chessRange', range(props.chessProp.xy))
       }
       return {
-      passAttr,
-      pos,
+      passRange,
+      // pos,
       }
     },
     

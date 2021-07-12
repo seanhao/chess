@@ -1,7 +1,7 @@
 <template> 
   <div v-bind:style="{ backgroundColor: color}">
       <!-- Chess<p>{{ chessProp.name }}</p> -->
-      <component :is="chessType"  v-bind="$attrs"></component>
+      <component :is="chessType"  v-bind="$attrs" :chessProp="chessProp"></component>
       <!-- <King /> -->
   </div>
 </template>
@@ -34,10 +34,10 @@ export default {
 
     const data = toRef(props.chessProp)
 
-    const getAttr = (val) => {
-      console.log('-/-/-/- get Attr')
-      console.log('-/-/-/- Attr: ', val)
-    }
+    // const getAttr = (val) => {
+    //   console.log('-/-/-/- get Attr')
+    //   console.log('-/-/-/- Attr: ', val)
+    // }
 
     // watch(() => props.child_prop, (oldValue, newValue) => {
     //   console.log('---', oldValue, newValue)
@@ -53,7 +53,7 @@ export default {
     return {
       color,
       chessType,
-      getAttr,
+      // getAttr,
     }
   }
 }
