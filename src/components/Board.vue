@@ -39,7 +39,8 @@ export default {
     
     let step = reactive([])
 
-    provide("pos", "1-1")
+    
+    
 
     const getAttr = (val) => {
       console.log('-/-/-/- get Attr')
@@ -83,7 +84,8 @@ export default {
     // const child_emit = ref("")
 
     let selectId = ref("")
-
+    provide('pos', selectId)
+    
     // select
     // const select = (event) => {
     //   if (selectId.value === ""){
@@ -115,6 +117,7 @@ export default {
           // select target
           // console.log("event.currentTarget: ",event.currentTarget.querySelector('div'))
           selectId.value = event.currentTarget.id
+
           console.log("***** select selectId.value: ", selectId.value)
           
           let pos = selectId.value
