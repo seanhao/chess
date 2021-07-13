@@ -18,25 +18,25 @@ export default {
   },
     setup(props, { emit }) {
 
-      console.log('Pawn prop', props.chessProp)
+      console.log('King prop', props.chessProp)
       // const pos = inject('pos')
       
       const range = (xy) => {
         console.log('xy: ', xy)
+        
+        let step = []
+
         let x = parseInt(xy.split('-')[0])
         let y = parseInt(xy.split('-')[1])
-        let possible1 = (x+1) + '-' + y
-        let possible2 = (x-1) + '-' + y
-        let possible3 = x + '-' + (y+1)
-        let possible4 = x + '-' + (y-1)
-        let possible5 = (x+1) + '-' + (y+1)
-        let possible6 = (x-1) + '-' + (y-1)
-        let possible7 = (x-1) + '-' + (y+1)
-        let possible8 = (x+1) + '-' + (y-1)
 
-
-        let step = [possible1, possible2, possible3, possible4, 
-                    possible5, possible6, possible7, possible8, ]
+        step.push((x+1) + '-' + y)
+        step.push((x-1) + '-' + y)
+        step.push(x + '-' + (y+1))
+        step.push(x + '-' + (y-1))
+        step.push((x+1) + '-' + (y+1))
+        step.push((x-1) + '-' + (y-1))
+        step.push((x-1) + '-' + (y+1))
+        step.push((x+1) + '-' + (y-1))
         
         return step
       }

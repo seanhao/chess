@@ -1,5 +1,5 @@
 <template> 
-  <div v-bind:style="{ backgroundColor: color}">
+  <div class="chess" v-bind:style="{ backgroundColor: teamColor}">
       <!-- Chess<p>{{ chessProp.name }}</p> -->
       <component :is="chessType"  v-bind="$attrs" :chessProp="chessProp"></component>
       <!-- <King /> -->
@@ -10,12 +10,14 @@
 import { ref, toRef, computed, watch } from 'vue'
 import King from './chess/King.vue'
 import Pawn from './chess/Pawn.vue'
+import Bishop from './chess/Bishop.vue'
 
 export default {
   name: 'Chess',
   components: {
     King,
     Pawn,
+    Bishop,
   },
   props: {
     'chessProp': {
@@ -31,6 +33,14 @@ export default {
     const chessType = computed(() => {
       return props.chessProp.name
     })
+
+    let teamColor = ''
+
+    if (props.chessProp.team == 1) {
+      teamColor = '#FFBFFF'
+    } else {
+      teamColor = '#00EC00'
+    }
 
     const data = toRef(props.chessProp)
 
@@ -51,10 +61,24 @@ export default {
     // })
 
     return {
-      color,
+      teamColor,
       chessType,
       // getAttr,
     }
   }
 }
 </script>
+<style>
+  .chess {
+    /* background: #f00; */
+    width: 100%;
+    height: 100%;
+    opacity: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  p {
+    color: black;
+  }
+</style>

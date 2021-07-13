@@ -7,13 +7,13 @@
   </div>
   <table>
   <!-- <button @click="reset()" >reset</button> -->
-  <tr v-for="(row, rowIndex) in 9" :key="rowIndex">
-    <td v-for="(col, colIndex) in 9" :key="colIndex" :id="rowIndex+'-'+colIndex" @click="selectToMove">
+  <tr v-for="(row, rowIndex) in 8" :key="rowIndex">
+    <td v-for="(col, colIndex) in 8" :key="colIndex" :id="rowIndex+'-'+colIndex" @click="selectToMove">
       <!-- {{ rowIndex }},{{ colIndex }} -
       ( {{ findChess(rowIndex+'-'+colIndex) }} ) -->
       
       <div v-if="findChess(rowIndex+'-'+colIndex)">
-        <Chess class="chess" v-if="findChess(rowIndex+'-'+colIndex)" :chessProp="findChess(rowIndex+'-'+colIndex)" @chessRange="getRange" />
+        <Chess v-if="findChess(rowIndex+'-'+colIndex)" :chessProp="findChess(rowIndex+'-'+colIndex)" @chessRange="getRange" />
       </div>
       <Step class="step" :stepProp="step" v-if="findStep(rowIndex+'-'+colIndex)"/>
     </td>
@@ -34,8 +34,9 @@ export default {
     Step,
   },
   setup() {
-    const chess = reactive([{name: 'Pawn', type: 1, xy: '0-1'},
-                            {name: 'King', type: 2, xy: '1-1'},])
+    const chess = reactive([{name: 'Pawn', type: 1, xy: '0-1', team: 1},
+                            {name: 'King', type: 2, xy: '1-1', team: 2},
+                            {name: 'Bishop', type: 3, xy: '2-1', team: 1},])
     
     let step = reactive([])
 
@@ -133,9 +134,9 @@ export default {
 
           // cancel selected
 
-          selectId.value = ""
+          selectId.value = ''
           step = []
-          console.log("***** cancel selectId.value: ", selectId.value)
+          console.log('***** cancel selectId.value: ', selectId.value)
 
         } else {
 
@@ -144,6 +145,14 @@ export default {
           if (event.currentTarget.querySelector('div.chess') != null) {
             
             //captured piece
+            let capturedId = event.currentTarget.id
+            let chessIndex = findChessIndex(selectId.value)
+            let capturedChessIndex = findChessIndex(capturedId)
+            if (chess[chessIndex].team == chess[capturedChessIndex].team) {
+              alert('you can\'t attack teammate')
+            } else {
+              alert('captured piece!')
+            }
 
             console.log("***** captured piece ")
             alert('danger!!')
