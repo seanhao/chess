@@ -1,6 +1,8 @@
 <template>
   <div>
     select : {{ selectId }}
+    chessMap : {{ chessMap }}
+    chess : {{ chess }}
     <!-- parent: <input type="text" v-model.number="parent_prop"> -->
     <!-- from child: {{ child_emit }} -->
     <!-- <input type="text" v-model="parent_prop"> -->
@@ -25,7 +27,7 @@
 <script>
 import Chess from './Chess.vue'
 import Step from './Step.vue'
-import { ref, reactive, provide } from 'vue'
+import { ref, reactive, provide, onMounted, watchEffect } from 'vue'
 
 export default {
   name: 'Board',
@@ -37,6 +39,28 @@ export default {
     const chess = reactive([{name: 'Pawn', type: 1, xy: '0-1', team: 1},
                             {name: 'King', type: 2, xy: '1-1', team: 2},
                             {name: 'Bishop', type: 3, xy: '2-1', team: 1},])
+
+    let chessMap = reactive([])
+
+    const renewChessMap = () => {
+        console.log('OOOOOOO renewChessMap')
+        chessMap = []
+        chess.forEach((element) => {
+          
+          chessMap.push(element.xy)
+          
+        })
+        console.log(chessMap)
+    }
+    chess.forEach((element) => {
+        
+        chessMap.push(element.xy)
+        
+      })
+    
+    
+
+    provide('chessMap', chessMap)
     
     let step = reactive([])
 
@@ -182,6 +206,7 @@ export default {
                   selectId.value = ""
                   step = []
                 
+                renewChessMap()
                 //RECORDER
               }
               
@@ -221,6 +246,8 @@ export default {
       selectId,
       selectToMove,
       getRange,
+      chessMap,
+      chess,
     }
   }
 }

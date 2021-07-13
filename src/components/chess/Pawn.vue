@@ -1,7 +1,7 @@
 <template> 
   <div @click="passRange">
       <p>Pawn</p>
-      <!-- {{ pos }} -->
+      {{ chessMap }}
   </div>
 </template>
 
@@ -20,7 +20,9 @@ export default {
 
       console.log('Pawn prop', props.chessProp)
       // const pos = inject('pos')
-      
+      const chessMap = inject('chessMap')
+
+      console.log('++++++chessMap :', chessMap)
       const range = (xy) => {
         console.log('xy: ', xy)
         let x = parseInt(xy.split('-')[0])
@@ -42,6 +44,7 @@ export default {
       return {
       passRange,
       // pos,
+      chessMap,
       }
     },
     
