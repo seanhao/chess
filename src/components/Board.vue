@@ -45,7 +45,14 @@ export default {
 
     const getRange = (val) => {
       console.log('-/-/-/- getRange: ', val)
-      step = val
+
+      // 此層判斷為避免capture在step range外的chess造成step轉換為captured的chess之step range
+      // 冒泡順序為chessType的div -> chess -> board 故最一開始board的selectId會為空
+      // 首先沒有chess被選擇時才可以賦予range
+      if (selectId.value == '') {
+        step = val
+      }
+      
     }
 
     const findChess = (xy) => {
@@ -140,42 +147,52 @@ export default {
 
         } else {
 
-          // move
+          // move or capture
           
-          if (event.currentTarget.querySelector('div.chess') != null) {
+          let moveToId = event.currentTarget.id
+
+          if (findStep(moveToId)) {
+
+              if (event.currentTarget.querySelector('div.chess') != null) {
             
-            //captured piece
-            let capturedId = event.currentTarget.id
-            let chessIndex = findChessIndex(selectId.value)
-            let capturedChessIndex = findChessIndex(capturedId)
-            if (chess[chessIndex].team == chess[capturedChessIndex].team) {
-              alert('you can\'t attack teammate')
+                //captured piece
+                let capturedId = event.currentTarget.id
+                let chessIndex = findChessIndex(selectId.value)
+                let capturedChessIndex = findChessIndex(capturedId)
+                if (chess[chessIndex].team == chess[capturedChessIndex].team) {
+                  alert('you can\'t attack teammate')
+                } else {
+                  alert('captured piece!')
+                }
+
+                // console.log("***** captured piece ")
+                // alert('danger!!')
+
+              } else {
+                
+                // move
+
+                let chessIndex = findChessIndex(selectId.value)
+                
+                console.log("***** change selectId.value to:", selectId.value)
+                console.log('***** chessIndex: ', chessIndex)
+                console.log('***** step: ', step)
+                
+                chess[chessIndex].xy = moveToId
+                  selectId.value = ""
+                  step = []
+                
+                //RECORDER
+              }
+              
+
             } else {
-              alert('captured piece!')
-            }
 
-            console.log("***** captured piece ")
-            alert('danger!!')
-
-          } else {
-            
-            // move
-
-            let chessIndex = findChessIndex(selectId.value)
-            let moveToId = event.currentTarget.id
-            console.log("***** change selectId.value to:", selectId.value)
-            console.log('***** chessIndex: ', chessIndex)
-            console.log('***** step: ', step)
-            if (findStep(moveToId)) {
-              chess[chessIndex].xy = moveToId
-              selectId.value = ""
-              step = []
-            } else {
               alert('can\'t move here')
-            }
-            
 
-          }
+            }
+
+          
           
         }
 
