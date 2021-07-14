@@ -1,8 +1,8 @@
 <template>
   <div>
     select : {{ selectId }}
-    chessMap : {{ chessMap }}
-    chess : {{ chess }}
+    <!-- chessMap : {{ chessMap }}
+    chess : {{ chess }} -->
     <!-- parent: <input type="text" v-model.number="parent_prop"> -->
     <!-- from child: {{ child_emit }} -->
     <!-- <input type="text" v-model="parent_prop"> -->
@@ -13,10 +13,7 @@
     <td v-for="(col, colIndex) in 8" :key="colIndex" :id="rowIndex+'-'+colIndex" @click="selectToMove">
       <!-- {{ rowIndex }},{{ colIndex }} -
       ( {{ findChess(rowIndex+'-'+colIndex) }} ) -->
-      
-      <div v-if="findChess(rowIndex+'-'+colIndex)">
-        <Chess v-if="findChess(rowIndex+'-'+colIndex)" :chessProp="findChess(rowIndex+'-'+colIndex)" @chessRange="getRange" />
-      </div>
+      <Chess v-if="findChess(rowIndex+'-'+colIndex)" :chessProp="findChess(rowIndex+'-'+colIndex)" @chessRange="getRange" />
       <Step class="step" :stepProp="step" v-if="findStep(rowIndex+'-'+colIndex)"/>
     </td>
   </tr>
@@ -27,7 +24,7 @@
 <script>
 import Chess from './Chess.vue'
 import Step from './Step.vue'
-import { ref, reactive, provide, onMounted, watchEffect } from 'vue'
+import { computed, ref, reactive, provide, onMounted, watchEffect, isReactive, toRefs } from 'vue'
 
 export default {
   name: 'Board',
@@ -36,31 +33,24 @@ export default {
     Step,
   },
   setup() {
-    const chess = reactive([{name: 'Pawn', type: 1, xy: '0-1', team: 1},
-                            {name: 'King', type: 2, xy: '1-1', team: 2},
-                            {name: 'Bishop', type: 3, xy: '2-1', team: 1},])
+    const chess = reactive([{id: 1, name: 'King', type: 2, xy: '1-1', team: 2, isAlive: true},
+                            {id: 2, name: 'Pawn', type: 1, xy: '0-1', team: 1, isAlive: true},
+                            {id: 3, name: 'Pawn', type: 1, xy: '3-1', team: 2, isAlive: true},
+                            {id: 4, name: 'Bishop', type: 3, xy: '2-1', team: 1, isAlive: true}])
+    
+    const chessMap = computed(() => {
 
-    let chessMap = reactive([])
+      let result = []
 
-    const renewChessMap = () => {
-        console.log('OOOOOOO renewChessMap')
-        chessMap = []
-        chess.forEach((element) => {
-          
-          chessMap.push(element.xy)
-          
-        })
-        console.log(chessMap)
-    }
-    chess.forEach((element) => {
+      chess.forEach((element) => {
         
-        chessMap.push(element.xy)
+        result.push(element.xy)
         
       })
-    
-    
+      return result
 
-    provide('chessMap', chessMap)
+    })
+    
     
     let step = reactive([])
 
@@ -83,7 +73,7 @@ export default {
       // xy == Array == [x, y]
       // console.log('findChess XY: ', xy)
       // console.log('value : ', chess.value)
-      let result = chess.find(c => c.xy == xy)
+      let result = chess.find(c => c.xy == xy && c.isAlive == true)
       // console.log('findChess: ', result)
       return result
     }
@@ -105,12 +95,12 @@ export default {
     //   console.log(chess)
     // }
 
-    const move = () => {
-      let chessIndex = chess.findIndex(c => JSON.stringify(c.xy) == JSON.stringify('1-1'))
-      console.log('chessIndex: ', chessIndex)
-      chess[chessIndex].xy = '1-0'
+    // const move = () => {
+    //   let chessIndex = chess.findIndex(c => JSON.stringify(c.xy) == JSON.stringify('1-1'))
+    //   console.log('chessIndex: ', chessIndex)
+    //   chess[chessIndex].xy = '1-0'
 
-    }
+    // }
 
     // const parent_prop = ref(123)
     // const child_emit = ref("")
@@ -184,9 +174,15 @@ export default {
                 let chessIndex = findChessIndex(selectId.value)
                 let capturedChessIndex = findChessIndex(capturedId)
                 if (chess[chessIndex].team == chess[capturedChessIndex].team) {
+
                   alert('you can\'t attack teammate')
                 } else {
+
                   alert('captured piece!')
+                  chess[chessIndex].xy = capturedId
+                  chess[capturedChessIndex].isAlive = false
+                  selectId.value = ""
+                  step = []
                 }
 
                 // console.log("***** captured piece ")
@@ -206,8 +202,6 @@ export default {
                   selectId.value = ""
                   step = []
                 
-                renewChessMap()
-                //RECORDER
               }
               
 
@@ -232,6 +226,7 @@ export default {
     //   child_emit.value = value
     // }
 
+    provide('chessMap', chess)
 
     return {
       // parent_prop,

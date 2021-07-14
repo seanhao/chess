@@ -1,7 +1,7 @@
 <template> 
   <div @click="passRange">
       <p>Pawn</p>
-      {{ chessMap }}
+      <!-- {{ chessMap }} -->
   </div>
 </template>
 
@@ -10,7 +10,6 @@ import { inject, computed, reactive } from 'vue'
 
 export default {
     name: 'Pawn',
-    emits: ["chessAttr"],
     props: {
     'chessProp': {
       type: Object,

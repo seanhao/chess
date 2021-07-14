@@ -1,6 +1,7 @@
 <template> 
   <div @click="passRange">
       <p>Bishop</p>
+      <!-- {{ chessMap }} -->
   </div>
 </template>
 
@@ -18,6 +19,8 @@ export default {
     setup(props, { emit }) {
 
       console.log('Bishop prop', props.chessProp)
+
+      const chessMap = inject('chessMap')
       
       const range = (xy) => {
         console.log('xy: ', xy)
@@ -27,11 +30,34 @@ export default {
         let step = []
 
         for (let i = 1; i <= 7; i++) {
-            step.push((x+i) + '-' + (y+i))
-            step.push((x-i) + '-' + (y-i))
-            step.push((x-i) + '-' + (y+i))
-            step.push((x+i) + '-' + (y-i))
+            let possible = (x+i) + '-' + (y+i)
+            step.push(possible)
+            if (chessMap.find(c => c.xy == possible)) {
+                break
+            }
         }
+        for (let i = 1; i <= 7; i++) {
+            let possible = (x-i) + '-' + (y-i)
+            step.push(possible)
+            if (chessMap.find(c => c.xy == possible)) {
+                break
+            }
+        }
+        for (let i = 1; i <= 7; i++) {
+            let possible = (x-i) + '-' + (y+i)
+            step.push(possible)
+            if (chessMap.find(c => c.xy == possible)) {
+                break
+            }
+        }
+        for (let i = 1; i <= 7; i++) {
+            let possible = (x+i) + '-' + (y-i)
+            step.push(possible)
+            if (chessMap.find(c => c.xy == possible)) {
+                break
+            }
+        }
+
         // let possible5 = (x+i) + '-' + (y+i)
         // let possible6 = (x-i) + '-' + (y-i)
         // let possible7 = (x-i) + '-' + (y+i)
@@ -50,6 +76,7 @@ export default {
       }
       return {
       passRange,
+      chessMap
       }
     },
     
