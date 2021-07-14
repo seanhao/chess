@@ -11,6 +11,7 @@ import { ref, toRef, computed, watch } from 'vue'
 import King from './chess/King.vue'
 import Pawn from './chess/Pawn.vue'
 import Bishop from './chess/Bishop.vue'
+import Rook from './chess/Rook.vue'
 
 export default {
   name: 'Chess',
@@ -18,6 +19,7 @@ export default {
     King,
     Pawn,
     Bishop,
+    Rook,
   },
   props: {
     'chessProp': {

@@ -36,7 +36,8 @@ export default {
     const chess = reactive([{id: 1, name: 'King', type: 2, xy: '1-1', team: 2, isAlive: true},
                             {id: 2, name: 'Pawn', type: 1, xy: '0-1', team: 1, isAlive: true},
                             {id: 3, name: 'Pawn', type: 1, xy: '3-1', team: 2, isAlive: true},
-                            {id: 4, name: 'Bishop', type: 3, xy: '2-1', team: 1, isAlive: true}])
+                            {id: 4, name: 'Bishop', type: 3, xy: '2-1', team: 1, isAlive: true},
+                            {id: 5, name: 'Rook', type: 3, xy: '5-5', team: 1, isAlive: true}])
     
     const chessMap = computed(() => {
 
@@ -79,7 +80,7 @@ export default {
     }
 
     const findChessIndex = (xy) => {
-      let index = chess.findIndex(c => c.xy === xy)
+      let index = chess.findIndex(c => c.xy == xy && c.isAlive == true)
       return index
     }
 
@@ -87,40 +88,10 @@ export default {
       return step.find(s => s == xy)
     }
     
-    // ????
-    // const reset = () => {
-    //   console.log('******** reset')
-    //   chess = [{name: 'Pawn', type: 1, xy: '0-1'},
-    //             {name: 'Queen', type: 0, xy: '1-1'},]
-    //   console.log(chess)
-    // }
-
-    // const move = () => {
-    //   let chessIndex = chess.findIndex(c => JSON.stringify(c.xy) == JSON.stringify('1-1'))
-    //   console.log('chessIndex: ', chessIndex)
-    //   chess[chessIndex].xy = '1-0'
-
-    // }
-
-    // const parent_prop = ref(123)
-    // const child_emit = ref("")
 
     let selectId = ref("")
-    // provide('pos', selectId)
-    
-    // select
-    // const select = (event) => {
-    //   if (selectId.value === ""){
-    //     selectId.value = event.currentTarget.id
-    //     console.log("selectId.value: ", selectId.value)
-    //   } else if (selectId.value === event.currentTarget.id) {
-    //     selectId.value = ""
-    //     console.log("cancel selectId.value: ", selectId.value)
-    //   } else {
-    //     selectId.value = event.currentTarget.id
-    //     console.log("change selectId.value to:", selectId.value)
-    //   }
-    // }
+
+
 
     const selectToMove = (event) => {
 
@@ -142,14 +113,6 @@ export default {
 
           console.log("***** select selectId.value: ", selectId.value)
           
-          // let pos = selectId.value
-          // let x = parseInt(pos.split('-')[0])
-          // let y = parseInt(pos.split('-')[1])
-          // let possible1 = (x+1) + '-' + y
-          // let possible2 = (x-1) + '-' + y
-          // let possible3 = x + '-' + (y+1)
-          // let possible4 = x + '-' + (y-1)
-          // step = [possible1, possible2, possible3, possible4]
         
         } else if (selectId.value === event.currentTarget.id) {
 
@@ -166,7 +129,7 @@ export default {
           let moveToId = event.currentTarget.id
 
           if (findStep(moveToId)) {
-
+              console.log('FINDDDDDDDDDDDDDDDD ', chess)
               if (event.currentTarget.querySelector('div.chess') != null) {
             
                 //captured piece
@@ -178,9 +141,15 @@ export default {
                   alert('you can\'t attack teammate')
                 } else {
 
-                  alert('captured piece!')
-                  chess[chessIndex].xy = capturedId
+                  // alert('captured piece!')
+                  console.log('BBBBBBfore ', chess)
                   chess[capturedChessIndex].isAlive = false
+                  // setTimeout('console.log("test123");',30000);
+                  console.log('MMMMMMMM ', chess)
+                  chess[chessIndex].xy = capturedId
+                  
+                  console.log('AAAAAAAfter ', chess)
+                  
                   selectId.value = ""
                   step = []
                 }
@@ -199,8 +168,8 @@ export default {
                 console.log('***** step: ', step)
                 
                 chess[chessIndex].xy = moveToId
-                  selectId.value = ""
-                  step = []
+                selectId.value = ""
+                step = []
                 
               }
               
