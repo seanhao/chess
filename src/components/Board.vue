@@ -33,11 +33,48 @@ export default {
     Step,
   },
   setup() {
-    const chess = reactive([{id: 1, name: 'King', type: 2, xy: '1-1', team: 2, isAlive: true},
-                            {id: 2, name: 'Pawn', type: 1, xy: '0-1', team: 1, isAlive: true},
-                            {id: 3, name: 'Pawn', type: 1, xy: '3-1', team: 2, isAlive: true},
-                            {id: 4, name: 'Bishop', type: 3, xy: '2-1', team: 1, isAlive: true},
-                            {id: 5, name: 'Rook', type: 3, xy: '5-5', team: 1, isAlive: true}])
+    // const chess = reactive([{id: 1, name: 'King', xy: '1-1', team: 2, isAlive: true},
+    //                         {id: 2, name: 'Pawn', xy: '0-1', team: 1, isAlive: true},
+    //                         {id: 3, name: 'Pawn', xy: '3-1', team: 2, isAlive: true},
+    //                         {id: 4, name: 'Bishop', xy: '2-1', team: 1, isAlive: true},
+    //                         {id: 5, name: 'Rook', xy: '5-5', team: 1, isAlive: true},
+    //                         {id: 5, name: 'Knight', xy: '5-7', team: 2, isAlive: true}])
+
+    const chess = reactive([{id: 1, name: 'Rook', xy: '0-0', team: 1, isAlive: true},
+                            {id: 1, name: 'Knight', xy: '0-1', team: 1, isAlive: true},
+                            {id: 1, name: 'Bishop', xy: '0-2', team: 1, isAlive: true},
+                            {id: 1, name: 'Queen', xy: '0-3', team: 1, isAlive: true},
+                            {id: 1, name: 'King', xy: '0-4', team: 1, isAlive: true},
+                            {id: 1, name: 'Bishop', xy: '0-5', team: 1, isAlive: true},
+                            {id: 1, name: 'Knight', xy: '0-6', team: 1, isAlive: true},
+                            {id: 1, name: 'Rook', xy: '0-7', team: 1, isAlive: true},
+
+                            {id: 1, name: 'Pawn', xy: '1-0', team: 1, isAlive: true},
+                            {id: 1, name: 'Pawn', xy: '1-1', team: 1, isAlive: true},
+                            {id: 1, name: 'Pawn', xy: '1-2', team: 1, isAlive: true},
+                            {id: 1, name: 'Pawn', xy: '1-3', team: 1, isAlive: true},
+                            {id: 1, name: 'Pawn', xy: '1-4', team: 1, isAlive: true},
+                            {id: 1, name: 'Pawn', xy: '1-5', team: 1, isAlive: true},
+                            {id: 1, name: 'Pawn', xy: '1-6', team: 1, isAlive: true},
+                            {id: 1, name: 'Pawn', xy: '1-7', team: 1, isAlive: true},
+
+                            {id: 1, name: 'Rook', xy: '7-0', team: 2, isAlive: true},
+                            {id: 1, name: 'Knight', xy: '7-1', team: 2, isAlive: true},
+                            {id: 1, name: 'Bishop', xy: '7-2', team: 2, isAlive: true},
+                            {id: 1, name: 'Queen', xy: '7-3', team: 2, isAlive: true},
+                            {id: 1, name: 'King', xy: '7-4', team: 2, isAlive: true},
+                            {id: 1, name: 'Bishop', xy: '7-5', team: 2, isAlive: true},
+                            {id: 1, name: 'Knight', xy: '7-6', team: 2, isAlive: true},
+                            {id: 1, name: 'Rook', xy: '7-7', team: 2, isAlive: true},
+                            
+                            {id: 1, name: 'Pawn', xy: '6-0', team: 2, isAlive: true},
+                            {id: 1, name: 'Pawn', xy: '6-1', team: 2, isAlive: true},
+                            {id: 1, name: 'Pawn', xy: '6-2', team: 2, isAlive: true},
+                            {id: 1, name: 'Pawn', xy: '6-3', team: 2, isAlive: true},
+                            {id: 1, name: 'Pawn', xy: '6-4', team: 2, isAlive: true},
+                            {id: 1, name: 'Pawn', xy: '6-5', team: 2, isAlive: true},
+                            {id: 1, name: 'Pawn', xy: '6-6', team: 2, isAlive: true},
+                            {id: 1, name: 'Pawn', xy: '6-7', team: 2, isAlive: true},])
     
     const chessMap = computed(() => {
 
@@ -146,6 +183,7 @@ export default {
                   chess[capturedChessIndex].isAlive = false
                   // setTimeout('console.log("test123");',30000);
                   console.log('MMMMMMMM ', chess)
+                  
                   chess[chessIndex].xy = capturedId
                   
                   console.log('AAAAAAAfter ', chess)

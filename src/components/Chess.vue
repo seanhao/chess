@@ -1,25 +1,29 @@
 <template> 
   <div class="chess" v-bind:style="{ backgroundColor: teamColor}">
+  <!-- <div class="chess" v-bind:style="{ teamColor }"> -->
       <!-- Chess<p>{{ chessProp.name }}</p> -->
       <component :is="chessType"  v-bind="$attrs" :chessProp="chessProp"></component>
-      <!-- <King /> -->
   </div>
 </template>
 
 <script>
 import { ref, toRef, computed, watch } from 'vue'
 import King from './chess/King.vue'
-import Pawn from './chess/Pawn.vue'
+import Queen from './chess/Queen.vue'
 import Bishop from './chess/Bishop.vue'
+import Knight from './chess/Knight.vue'
 import Rook from './chess/Rook.vue'
+import Pawn from './chess/Pawn.vue'
 
 export default {
   name: 'Chess',
   components: {
     King,
-    Pawn,
+    Queen,
     Bishop,
+    Knight,
     Rook,
+    Pawn,
   },
   props: {
     'chessProp': {
@@ -30,19 +34,21 @@ export default {
   setup(props, { emit }) {
     
     console.log("prop:", props.chessProp.name)
-    const color = ref('')
+    // const color = ref('')
     
     const chessType = computed(() => {
       return props.chessProp.name
     })
+    
+    const teamColor = computed(() => {
 
-    let teamColor = ''
+      if (props.chessProp.team == 1) {
+        return '#FFBFFF'
+      } else {
+        return '#00EC00'
+      }
 
-    if (props.chessProp.team == 1) {
-      teamColor = '#FFBFFF'
-    } else {
-      teamColor = '#00EC00'
-    }
+    })
 
     const data = toRef(props.chessProp)
 
