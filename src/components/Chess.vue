@@ -34,7 +34,6 @@ export default {
   setup(props, { emit }) {
     
     console.log("prop:", props.chessProp.name)
-    // const color = ref('')
     
     const chessType = computed(() => {
       return props.chessProp.name
@@ -51,11 +50,6 @@ export default {
     })
 
     const data = toRef(props.chessProp)
-
-    // const getAttr = (val) => {
-    //   console.log('-/-/-/- get Attr')
-    //   console.log('-/-/-/- Attr: ', val)
-    // }
 
     // watch(() => props.child_prop, (oldValue, newValue) => {
     //   console.log('---', oldValue, newValue)

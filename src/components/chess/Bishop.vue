@@ -57,15 +57,6 @@ export default {
                 break
             }
         }
-
-        // let possible5 = (x+i) + '-' + (y+i)
-        // let possible6 = (x-i) + '-' + (y-i)
-        // let possible7 = (x-i) + '-' + (y+i)
-        // let possible8 = (x+i) + '-' + (y-i)
-
-
-        // let step = [possiblei, possible2, possible3, possible4, 
-        //             possible5, possible6, possible7, possible8, ]
         
         return step
       }
