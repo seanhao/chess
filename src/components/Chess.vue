@@ -49,7 +49,7 @@ export default {
 
     })
 
-    const data = toRef(props.chessProp)
+    // const data = toRef(props.chessProp)
 
     // watch(() => props.child_prop, (oldValue, newValue) => {
     //   console.log('---', oldValue, newValue)
@@ -65,7 +65,6 @@ export default {
     return {
       teamColor,
       chessType,
-      // getAttr,
     }
   }
 }

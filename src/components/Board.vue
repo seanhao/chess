@@ -49,14 +49,14 @@ export default {
                             {id: 1, name: 'Knight', xy: '0-6', team: 1, isAlive: true},
                             {id: 1, name: 'Rook', xy: '0-7', team: 1, isAlive: true},
 
-                            {id: 1, name: 'Pawn', xy: '1-0', team: 1, isAlive: true},
-                            {id: 1, name: 'Pawn', xy: '1-1', team: 1, isAlive: true},
-                            {id: 1, name: 'Pawn', xy: '1-2', team: 1, isAlive: true},
-                            {id: 1, name: 'Pawn', xy: '1-3', team: 1, isAlive: true},
-                            {id: 1, name: 'Pawn', xy: '1-4', team: 1, isAlive: true},
-                            {id: 1, name: 'Pawn', xy: '1-5', team: 1, isAlive: true},
-                            {id: 1, name: 'Pawn', xy: '1-6', team: 1, isAlive: true},
-                            {id: 1, name: 'Pawn', xy: '1-7', team: 1, isAlive: true},
+                            {id: 1, name: 'Pawn', xy: '1-0', team: 1, isAlive: true, isFirstMove: true, },
+                            {id: 1, name: 'Pawn', xy: '1-1', team: 1, isAlive: true, isFirstMove: true, },
+                            {id: 1, name: 'Pawn', xy: '1-2', team: 1, isAlive: true, isFirstMove: true, },
+                            {id: 1, name: 'Pawn', xy: '1-3', team: 1, isAlive: true, isFirstMove: true, },
+                            {id: 1, name: 'Pawn', xy: '1-4', team: 1, isAlive: true, isFirstMove: true, },
+                            {id: 1, name: 'Pawn', xy: '1-5', team: 1, isAlive: true, isFirstMove: true, },
+                            {id: 1, name: 'Pawn', xy: '1-6', team: 1, isAlive: true, isFirstMove: true, },
+                            {id: 1, name: 'Pawn', xy: '1-7', team: 1, isAlive: true, isFirstMove: true, },
 
                             {id: 1, name: 'Rook', xy: '7-0', team: 2, isAlive: true},
                             {id: 1, name: 'Knight', xy: '7-1', team: 2, isAlive: true},
@@ -67,14 +67,14 @@ export default {
                             {id: 1, name: 'Knight', xy: '7-6', team: 2, isAlive: true},
                             {id: 1, name: 'Rook', xy: '7-7', team: 2, isAlive: true},
                             
-                            {id: 1, name: 'Pawn', xy: '6-0', team: 2, isAlive: true},
-                            {id: 1, name: 'Pawn', xy: '6-1', team: 2, isAlive: true},
-                            {id: 1, name: 'Pawn', xy: '6-2', team: 2, isAlive: true},
-                            {id: 1, name: 'Pawn', xy: '6-3', team: 2, isAlive: true},
-                            {id: 1, name: 'Pawn', xy: '6-4', team: 2, isAlive: true},
-                            {id: 1, name: 'Pawn', xy: '6-5', team: 2, isAlive: true},
-                            {id: 1, name: 'Pawn', xy: '6-6', team: 2, isAlive: true},
-                            {id: 1, name: 'Pawn', xy: '6-7', team: 2, isAlive: true},])
+                            {id: 1, name: 'Pawn', xy: '6-0', team: 2, isAlive: true, isFirstMove: true, },
+                            {id: 1, name: 'Pawn', xy: '6-1', team: 2, isAlive: true, isFirstMove: true, },
+                            {id: 1, name: 'Pawn', xy: '6-2', team: 2, isAlive: true, isFirstMove: true, },
+                            {id: 1, name: 'Pawn', xy: '6-3', team: 2, isAlive: true, isFirstMove: true, },
+                            {id: 1, name: 'Pawn', xy: '6-4', team: 2, isAlive: true, isFirstMove: true, },
+                            {id: 1, name: 'Pawn', xy: '6-5', team: 2, isAlive: true, isFirstMove: true, },
+                            {id: 1, name: 'Pawn', xy: '6-6', team: 2, isAlive: true, isFirstMove: true, },
+                            {id: 1, name: 'Pawn', xy: '6-7', team: 2, isAlive: true, isFirstMove: true, },])
     
     const chessMap = computed(() => {
 

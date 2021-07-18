@@ -25,11 +25,16 @@ export default {
         console.log('xy: ', xy)
         let x = parseInt(xy.split('-')[0])
         let y = parseInt(xy.split('-')[1])
-        let possible1 = (x+1) + '-' + y
-        let possible2 = (x-1) + '-' + y
-        let possible3 = x + '-' + (y+1)
-        let possible4 = x + '-' + (y-1)
-        let step = [possible1, possible2, possible3, possible4]
+        let step = []
+
+        if (props.chessProp.isFirstMove === true) {
+          step.push((x-2) + '-' + y)
+          props.chessProp.isFirstMove = false
+        }
+        step.push((x-1) + '-' + y)
+
+        // props 在子層變過可自動返回父層耶!
+
         
         return step
       }
