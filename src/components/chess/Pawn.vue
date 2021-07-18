@@ -26,12 +26,26 @@ export default {
         let x = parseInt(xy.split('-')[0])
         let y = parseInt(xy.split('-')[1])
         let step = []
+        
+        if (props.chessProp.team === 1) {
 
-        if (props.chessProp.isFirstMove === true) {
-          step.push((x-2) + '-' + y)
-          props.chessProp.isFirstMove = false
+          if (props.chessProp.isFirstMove === true) {
+            step.push((x-2) + '-' + y)
+            props.chessProp.isFirstMove = false
+          }
+
+          step.push((x-1) + '-' + y)
+
+        } else {
+
+          if (props.chessProp.isFirstMove === true) {
+            step.push((x+2) + '-' + y)
+            props.chessProp.isFirstMove = false
+          }
+
+          step.push((x+1) + '-' + y)
+
         }
-        step.push((x-1) + '-' + y)
 
         // props 在子層變過可自動返回父層耶!
 
