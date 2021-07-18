@@ -31,7 +31,9 @@ export default {
 
           if (props.chessProp.isFirstMove === true) {
             step.push((x-2) + '-' + y)
-            props.chessProp.isFirstMove = false
+
+            // props 在子層變過可自動返回父層耶!
+            // props.chessProp.isFirstMove = false
           }
 
           step.push((x-1) + '-' + y)
@@ -40,7 +42,8 @@ export default {
 
           if (props.chessProp.isFirstMove === true) {
             step.push((x+2) + '-' + y)
-            props.chessProp.isFirstMove = false
+            
+            // props.chessProp.isFirstMove = false
           }
 
           step.push((x+1) + '-' + y)

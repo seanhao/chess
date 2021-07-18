@@ -14,7 +14,8 @@
       <!-- {{ rowIndex }},{{ colIndex }} -
       ( {{ findChess(rowIndex+'-'+colIndex) }} ) -->
       <Chess v-if="findChess(rowIndex+'-'+colIndex)" :chessProp="findChess(rowIndex+'-'+colIndex)" @chessRange="getRange" />
-      <Step class="step" :stepProp="step" v-if="findStep(rowIndex+'-'+colIndex)"/>
+      <Step class="step" v-if="findStep(rowIndex+'-'+colIndex)"/>
+      <Step class="capture" v-if="findStep(rowIndex+'-'+colIndex)"/>
     </td>
   </tr>
  
@@ -24,6 +25,7 @@
 <script>
 import Chess from './Chess.vue'
 import Step from './Step.vue'
+import Capture from './Capture.vue'
 import { computed, ref, reactive, provide, onMounted, watchEffect, isReactive, toRefs } from 'vue'
 
 export default {
@@ -31,6 +33,7 @@ export default {
   components: {
     Chess,
     Step,
+    Capture,
   },
   setup() {
     // const chess = reactive([{id: 1, name: 'King', xy: '1-1', team: 1, isAlive: true},
@@ -136,67 +139,69 @@ export default {
 
       if (event.currentTarget.querySelector('div.chess') === null && selectId.value === "") {
         
-        // no chess 
-
-        console.log('***** no chess!!!')
+        // 選擇區域沒有棋子
+        console.log('***** 選擇區域沒有棋子!!!')
 
       } else {
-        
+        // 有棋子存在
+
         if (selectId.value === ""){
-          
+          // 選取目標棋子
           // select target
           // console.log("event.currentTarget: ",event.currentTarget.querySelector('div'))
           selectId.value = event.currentTarget.id
 
           console.log("***** select selectId.value: ", selectId.value)
-          
         
         } else if (selectId.value === event.currentTarget.id) {
 
-          // cancel selected
+          // 點選到已選取棋子，取消選取
 
           selectId.value = ''
           step = []
-          console.log('***** cancel selectId.value: ', selectId.value)
+          console.log('***** 點選到已選取棋子，取消選取 selectId.value: ', selectId.value)
 
         } else {
-
-          // move or capture
+          
+          // 移動或吃掉
           
           let moveToId = event.currentTarget.id
 
           if (findStep(moveToId)) {
-              console.log('FINDDDDDDDDDDDDDDDD ', chess)
-              if (event.currentTarget.querySelector('div.chess') != null) {
+
+            // 可移動範圍
             
-                //captured piece
+              if (event.currentTarget.querySelector('div.chess') != null) {
+                // 有棋子存在，吃棋判斷
+                // captured piece
+
                 let capturedId = event.currentTarget.id
                 let chessIndex = findChessIndex(selectId.value)
                 let capturedChessIndex = findChessIndex(capturedId)
+
                 if (chess[chessIndex].team == chess[capturedChessIndex].team) {
-
-                  alert('you can\'t attack teammate')
+                  // 同隊不能互吃
+                  alert('同隊不能互吃！！')
                 } else {
-
+                  // 不同隊執行吃棋
                   // alert('captured piece!')
-                  console.log('BBBBBBfore ', chess)
+
+                  // 被吃的會死掉
                   chess[capturedChessIndex].isAlive = false
-                  // setTimeout('console.log("test123");',30000);
-                  console.log('MMMMMMMM ', chess)
                   
+                  // 吃的移動到捕獲位置
                   chess[chessIndex].xy = capturedId
-                  
-                  console.log('AAAAAAAfter ', chess)
-                  
+
+                  // 士兵第一次移動判斷
+                  chess[chessIndex].isFirstMove = false
+
                   selectId.value = ""
                   step = []
                 }
 
-                // console.log("***** captured piece ")
-                // alert('danger!!')
 
               } else {
-                
+                // 沒有旗子存在，移動
                 // move
 
                 let chessIndex = findChessIndex(selectId.value)
@@ -206,6 +211,10 @@ export default {
                 console.log('***** step: ', step)
                 
                 chess[chessIndex].xy = moveToId
+
+                // 士兵第一次移動
+                chess[chessIndex].isFirstMove = false
+                
                 selectId.value = ""
                 step = []
                 
@@ -213,8 +222,8 @@ export default {
               
 
             } else {
-
-              alert('can\'t move here')
+              // 不可移動範圍
+              alert('不可移動範圍')
 
             }
 
@@ -267,6 +276,16 @@ export default {
   
   .step {
     background: #f00;
+    width: 100%;
+    height: 100%;
+    opacity: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .capture {
+    background: rgb(0, 0, 0);
     width: 100%;
     height: 100%;
     opacity: 50%;
