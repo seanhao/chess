@@ -79,24 +79,21 @@ export default {
                             {id: 1, name: 'Pawn', xy: '6-6', team: 1, isAlive: true, isFirstMove: true, },
                             {id: 1, name: 'Pawn', xy: '6-7', team: 1, isAlive: true, isFirstMove: true, },])
     
-    const chessMap = computed(() => {
+    // const chessMap = computed(() => {
 
-      let result = []
+    //   let result = []
 
-      chess.forEach((element) => {
+    //   chess.forEach((element) => {
         
-        result.push(element.xy)
+    //     result.push(element.xy)
         
-      })
-      return result
+    //   })
+    //   return result
 
-    })
+    // })
     
     
     let step = reactive([])
-
-    
-    
 
     const getRange = (val) => {
       console.log('-/-/-/- getRange: ', val)
@@ -257,7 +254,7 @@ export default {
       selectId,
       selectToMove,
       getRange,
-      chessMap,
+    //   chessMap,
       chess,
     }
   }

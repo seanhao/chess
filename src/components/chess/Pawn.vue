@@ -1,7 +1,6 @@
 <template> 
   <div @click="passRange">
       <p>Pawn</p>
-      <!-- {{ pos }} -->
   </div>
 </template>
 
@@ -19,7 +18,7 @@ export default {
     setup(props, { emit }) {
 
       console.log('Pawn prop', props.chessProp)
-      // const pos = inject('pos')
+      const chessMap = inject('chessMap')
       
       const range = (xy) => {
         console.log('xy: ', xy)
@@ -30,8 +29,14 @@ export default {
         if (props.chessProp.team === 1) {
 
           if (props.chessProp.isFirstMove === true) {
-            step.push((x-2) + '-' + y)
+            console.log('chessMap:', chessMap)
+            let possible = (x-2) + '-' + y
+            if (chessMap.find(c => c.xy == possible && c.isAlive == true)) {
+                
+            } else {
 
+                step.push(possible)
+            }
             // props 在子層變過可自動返回父層耶!
             // props.chessProp.isFirstMove = false
           }
@@ -41,8 +46,12 @@ export default {
         } else {
 
           if (props.chessProp.isFirstMove === true) {
-            step.push((x+2) + '-' + y)
-            
+              let possible = (x+2) + '-' + y
+            if (chessMap.find(c => c.xy == possible && c.isAlive == true)) {
+                
+            } else {
+                step.push(possible)
+            }            
             // props.chessProp.isFirstMove = false
           }
 
@@ -63,7 +72,6 @@ export default {
       }
       return {
       passRange,
-      // pos,
       }
     },
     
