@@ -1,7 +1,7 @@
 <template> 
-  <div @click="passRange">
-      <p>Pawn</p>
-  </div>
+    <div @click="passRange">
+        <p>Pawn</p> 
+    </div>
 </template>
 
 <script>
@@ -11,68 +11,55 @@ export default {
     name: 'Pawn',
     emits: ["chessRange"],
     props: {
-    'chessProp': {
-      type: Object,
+        'chessProp': {
+            type: Object,
+        },
     },
-  },
     setup(props, { emit }) {
 
-      console.log('Pawn prop', props.chessProp)
-      const chessMap = inject('chessMap')
-      
-      const range = (xy) => {
-        console.log('xy: ', xy)
-        let x = parseInt(xy.split('-')[0])
-        let y = parseInt(xy.split('-')[1])
-        let step = []
+        console.log('Pawn prop', props.chessProp)
+        const chessMap = inject('chessMap')
         
-        if (props.chessProp.team === 1) {
+        const range = (xy) => {
+            console.log('xy: ', xy)
+            let x = parseInt(xy.split('-')[0])
+            let y = parseInt(xy.split('-')[1])
+            let step = []
 
-          if (props.chessProp.isFirstMove === true) {
-            console.log('chessMap:', chessMap)
-            let possible = (x-2) + '-' + y
-            if (chessMap.find(c => c.xy == possible && c.isAlive == true)) {
+            // 士兵方向判斷
+            let direct = (props.chessProp.team === 1) ? -1 : 1
+            
+            let oneSquare = (x+direct) + '-' + y
+
+            step.push(oneSquare)
+
+            if (props.chessProp.isFirstMove === true) {
+
+                console.log('chessMap:', chessMap)
                 
-            } else {
+                // 第一次移動的第二格
+                let twoSquare = (x+direct*2) + '-' + y
+                console.log('twoSquare ', twoSquare)
 
-                step.push(possible)
+                // 若前方無人阻擋
+                if (!(chessMap.find(c => c.xy == oneSquare && c.isAlive == true))) {
+                    step.push(twoSquare)
+                } 
+                // props 在子層變過可自動返回父層耶!
+                // props.chessProp.isFirstMove = false
             }
-            // props 在子層變過可自動返回父層耶!
-            // props.chessProp.isFirstMove = false
-          }
-
-          step.push((x-1) + '-' + y)
-
-        } else {
-
-          if (props.chessProp.isFirstMove === true) {
-              let possible = (x+2) + '-' + y
-            if (chessMap.find(c => c.xy == possible && c.isAlive == true)) {
-                
-            } else {
-                step.push(possible)
-            }            
-            // props.chessProp.isFirstMove = false
-          }
-
-          step.push((x+1) + '-' + y)
-
+        
+            return step
         }
 
-        // props 在子層變過可自動返回父層耶!
-
-        
-        return step
-      }
-
-      const passRange = () => {
-        console.log('-/-/-/-passRange')
-        // console.log('inject : ',pos.value)
-        emit('chessRange', range(props.chessProp.xy))
-      }
-      return {
-      passRange,
-      }
+        const passRange = () => {
+            // console.log('-/-/-/-passRange')
+            // console.log('inject : ',pos.value)
+            emit('chessRange', range(props.chessProp.xy))
+        }
+        return {
+            passRange,
+        }
     },
     
 }
