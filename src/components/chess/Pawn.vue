@@ -9,7 +9,7 @@ import { inject, computed, reactive } from 'vue'
 
 export default {
     name: 'Pawn',
-    emits: ["chessRange"],
+    emits: ['chessRange'],
     props: {
         'chessProp': {
             type: Object,
@@ -52,10 +52,26 @@ export default {
             return step
         }
 
+        // 士兵只能吃斜前方的
+        const capture = (xy) => {
+            let x = parseInt(xy.split('-')[0])
+            let y = parseInt(xy.split('-')[1])
+            let pos = []
+            let direct = (props.chessProp.team === 1) ? -1 : 1
+
+            pos.push((x+direct) + '-' + (y-1))
+            pos.push((x+direct) + '-' + (y+1))
+
+            return pos
+
+        }
+
         const passRange = () => {
             // console.log('-/-/-/-passRange')
             // console.log('inject : ',pos.value)
-            emit('chessRange', range(props.chessProp.xy))
+            emit('chessRange', {step: range(props.chessProp.xy),
+                                capture: capture(props.chessProp.xy),
+            })
         }
         return {
             passRange,

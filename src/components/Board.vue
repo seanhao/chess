@@ -15,7 +15,7 @@
       ( {{ findChess(rowIndex+'-'+colIndex) }} ) -->
       <Chess v-if="findChess(rowIndex+'-'+colIndex)" :chessProp="findChess(rowIndex+'-'+colIndex)" @chessRange="getRange" />
       <Step class="step" v-if="findStep(rowIndex+'-'+colIndex)"/>
-      <Step class="capture" v-if="findStep(rowIndex+'-'+colIndex)"/>
+      <Capture class="capture" v-if="findCapture(rowIndex+'-'+colIndex)"/>
     </td>
   </tr>
  
@@ -94,6 +94,7 @@ export default {
     
     
     let step = reactive([])
+    let capture = reactive([])
 
     const getRange = (val) => {
       console.log('-/-/-/- getRange: ', val)
@@ -101,9 +102,15 @@ export default {
       // 此層判斷為避免capture在step range外的chess造成step轉換為captured的chess之step range
       // 冒泡順序為chessType的div -> chess -> board 故最一開始board的selectId會為空
       // 首先沒有chess被選擇時才可以賦予range
-      if (selectId.value == '') {
-        step = val
-      }
+        if (selectId.value == '') {
+            step = val.step
+
+            if (val.capture) {
+                capture = val.capture
+            } else {
+                capture = val.step
+            }
+        }
       
     }
 
@@ -123,6 +130,10 @@ export default {
 
     const findStep = (xy) => {
       return step.find(s => s == xy)
+    }
+
+    const findCapture = (xy) => {
+      return capture.find(s => s == xy)
     }
     
 
@@ -156,6 +167,7 @@ export default {
 
           selectId.value = ''
           step = []
+          capture = []
           console.log('***** 點選到已選取棋子，取消選取 selectId.value: ', selectId.value)
 
         } else {
@@ -163,8 +175,9 @@ export default {
           // 移動或吃掉
           
           let moveToId = event.currentTarget.id
-
-          if (findStep(moveToId)) {
+          
+          // 可移動或可以吃(為了士兵)， 這部分要再確認一下邏輯
+          if (findStep(moveToId) || findCapture(moveToId)) {
 
             // 可移動範圍
             
@@ -176,24 +189,34 @@ export default {
                 let chessIndex = findChessIndex(selectId.value)
                 let capturedChessIndex = findChessIndex(capturedId)
 
-                if (chess[chessIndex].team == chess[capturedChessIndex].team) {
-                  // 同隊不能互吃
-                  alert('同隊不能互吃！！')
+                if (findCapture(moveToId)) {
+
+                    if (chess[chessIndex].team == chess[capturedChessIndex].team) {
+                    // 同隊不能互吃
+                    alert('同隊不能互吃！！')
+                    } else {
+                    // 不同隊執行吃棋
+                    // alert('captured piece!')
+
+                    // 被吃的會死掉
+                    chess[capturedChessIndex].isAlive = false
+                    
+                    // 吃的移動到捕獲位置
+                    chess[chessIndex].xy = capturedId
+
+                    // 士兵第一次移動判斷
+                    chess[chessIndex].isFirstMove = false
+
+                    selectId.value = ""
+                    step = []
+                    capture = []
+                    }
                 } else {
-                  // 不同隊執行吃棋
-                  // alert('captured piece!')
 
-                  // 被吃的會死掉
-                  chess[capturedChessIndex].isAlive = false
-                  
-                  // 吃的移動到捕獲位置
-                  chess[chessIndex].xy = capturedId
+                    // 主要是士兵不可吃
+                    // 避免士兵吃移動位置
+                    alert('非吃棋範圍')
 
-                  // 士兵第一次移動判斷
-                  chess[chessIndex].isFirstMove = false
-
-                  selectId.value = ""
-                  step = []
                 }
 
 
@@ -207,13 +230,22 @@ export default {
                 console.log('***** chessIndex: ', chessIndex)
                 console.log('***** step: ', step)
                 
-                chess[chessIndex].xy = moveToId
+                if (findStep(moveToId)) {
+                    chess[chessIndex].xy = moveToId
 
-                // 士兵第一次移動
-                chess[chessIndex].isFirstMove = false
+                    // 士兵第一次移動
+                    chess[chessIndex].isFirstMove = false
+                    
+                    selectId.value = ""
+                    step = []
+                    capture = []
+
+                } else {
+                    // 不可移動範圍
+                    // 也是為了士兵避免移動到捕獲位置，這邊要調整邏輯
+                    alert('不可移動範圍')
+                }
                 
-                selectId.value = ""
-                step = []
                 
               }
               
@@ -247,6 +279,7 @@ export default {
       findChess,
       step,
       findStep,
+      findCapture,
       // show,
       // move,
       // reset,

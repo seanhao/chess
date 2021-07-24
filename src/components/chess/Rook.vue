@@ -59,7 +59,7 @@ export default {
 
       const passRange = () => {
 
-        emit('chessRange', range(props.chessProp.xy))
+        emit('chessRange', {step: range(props.chessProp.xy)})
       }
       return {
       passRange,

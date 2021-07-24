@@ -45,7 +45,7 @@ export default {
       const passRange = () => {
         console.log('-/-/-/-passRange')
         // console.log('inject : ',pos.value)
-        emit('chessRange', range(props.chessProp.xy))
+        emit('chessRange', {step: range(props.chessProp.xy)})
       }
       return {
       passRange,
